@@ -16,8 +16,6 @@ class BroadcooomView(BinaryView):
 		self.data = data
 
 	def init(self):
-		#self.add_auto_segment(0x1000, 0x4000, 0, 0x4000, SegmentFlag.SegmentReadable|SegmentFlag.SegmentWritable|SegmentFlag.SegmentExecutable)		
-		#self.add_entry_point(0x1000)
 		self.add_auto_segment(0, 0x4000, 0, 0x4000, SegmentFlag.SegmentReadable|SegmentFlag.SegmentWritable|SegmentFlag.SegmentExecutable)		
 		self.add_entry_point(0)
 		return True
