@@ -4,4 +4,6 @@ An architecture plugin to analyse the firmware of the Broadcooom challenge in th
 
 ## Output
 
+Disassembling the [firmware](example/net-firmware) gives the following output.
+
 ![Disassembly](example/broadcooom-disassembly.png)
