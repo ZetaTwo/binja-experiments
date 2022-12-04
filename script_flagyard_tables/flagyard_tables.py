@@ -19,6 +19,7 @@ LOOKUP = {
 }
 LOOKUP_INV = {v:k for k,v in LOOKUP.items()}
 
+
 def parse_constructor(bv, addr):
     if addr == DEST:
         return -1
@@ -31,7 +32,6 @@ def parse_constructor(bv, addr):
             table = parse_constructor(bv, ins.dest.value.value)
         elif ins.operation == HighLevelILOperation.HLIL_ASSIGN:
             val = ins.operands[1].value.value
-            #if val != 0:
             table = val
     assert table != None, f'{addr:x}'
     return table
@@ -60,6 +60,7 @@ def find_path(bv, entry):
 def plugin_entry(bv):
     flag_path = find_path(bv, ENTRY_FUNC)
     print(bytes(LOOKUP_INV[x]+0x30 for x in flag_path).decode())
+
 
 binaryninja.PluginCommand.register("Flagyard Tables", "", plugin_entry)
 # FlagY{vt4bl3s_and_vtabl3s_and_m0re_vt3bles}
