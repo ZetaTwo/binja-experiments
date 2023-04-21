@@ -10,3 +10,4 @@ This repository contains various snippets and plugins that I have made for Binar
 * [ACNR VM 2022](arch_acnr_vm) - An architecture plugin to analyse the auth program of the custom VM in the ACNR 2022 challenge.
 * [pbctf 2021 Binary Tree](script_pbctf_bintree) - A script to solve the [2021 pbctf](https://ctftime.org/event/1371) challenge [Binary Tree](https://ctftime.org/task/17581)
 * [Flagyard Tables](script_flagyard_tables) - A script to solve the traning lab [Tables](https://flagyard.com/labs/training-labs/3/challenges/0477aaea-49cb-4ff8-82ba-2068830e8967) from [Flagyard](https://flagyard.com/)
+* [Obfuscated Stack String Helper](script_stack_string_helper) - A function which can help to deobfuscate simple obfuscated stack strings.
