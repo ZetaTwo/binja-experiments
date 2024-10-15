@@ -367,7 +367,41 @@ def main() -> None:
                     logger.error('C2 server did not accept handshake')
                     s.close()
                     continue
-                print(s.recv(2))
+
+                # The following part is untested since I don't have a live C2 to test against
+                cmd_len = struct.unpack('>H', s.recv(2))[0]
+                cmd_buf = s.recv(cmd_len)
+                cmd_hash, cmd_payload = cmd_buf[:0x20], cmd_buf[0x20:]
+                cmd_is_valid = cmd_hash == hashlib.sha256(cmd_payload).digest()
+                logger.info('C2 command length (32+x): %d', cmd_len)
+                logger.info('C2 hash: %s', cmd_hash.hex())
+                logger.info('C2 hash valid: %s', cmd_is_valid)
+                logger.info('C2 payload: %s', cmd_payload.hex())
+
+                # The payload then follows the Mirai structure
+                # uint32le : attack duration
+                # uint8    : attack ID
+                # uint8    : number of targets, N
+                # uint8[4] : target[0] IP
+                # uint8    : target[0] netmask
+                # uint8[4] : target[1] IP
+                # uint8    : target[1] netmask
+                # ...
+                # uint8[4] : target[N-1] IP
+                # uint8    : target[N-1] netmask
+                # uint8    : number of options, M
+                # uint8    : option[0] key
+                # uint8    : option[0] length, X
+                # uint[X]  : option[0] data
+                # uint8    : option[1] key
+                # uint8    : option[1] length, X
+                # uint[X]  : option[1] data
+                # ...
+                # uint8    : option[M-1] key
+                # uint8    : option[M-1] length, X
+                # uint[X]  : option[M-1] data
+
+                s.close()
 
             except TimeoutError as e:
                 logger.warning('Timed out connecting to C2 server "%s:%d"',
