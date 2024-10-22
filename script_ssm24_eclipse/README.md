@@ -1,6 +1,6 @@
 # Script: SSM24 - Eclipse
 
-A script to solve the challenge Eclipse (TODO: add link) from [Säkerhets-SM 2024 Finals](https://sakerhetssm.se). The challenge including source code can be found in the SSM24 archive (TODO: add link).
+A script to solve the challenge [Eclipse](https://sakerhetssm.se/challenges/eclipse) from [Säkerhets-SM 2024 Finals](https://sakerhetssm.se).
 
 The script consists of three stages. First it uses HLIL to find parameters to decrypt functions and decrypts them. The second stage builds a graph of all the function calls and how they affect the key state. Finally, the third stage iterates over all paths in the graph and uses the corresponding key state transitions to try to decrypt the flag until a successful path is found.
 
