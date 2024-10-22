@@ -1,39 +1,4 @@
 #!/usr/bin/env python3
-"""
-GorillaBot C2 Extractor v2
-
-This scripts attempts to extract C2 servers and auth key from GorillaBot samples.
-It proceeds in two phases. Phase one attempts to identify the c2_connect() and c2_loop() functions.
-Phase two emulates these functions to first extract the C2 servers and then the auth key.
-
-The GorillaBot malware will first iterate through a list of encrypted C2-servers,
-decrypt them with a modified XTEA algorithm (delta is non-standard) and try to connect to it.
-If it suceeds it will proceed to authenticate against the server,
-otherwise it will try the next server in the list.
-The authentication proceeds by sending a single byte with the value 0x01 to the server.
-The server will reply with four random bytes, which we can call the server seed.
-Then the malware will decrypt a 32 byte key, again using the XTEA variant, append it to the seed bytes,
-calculate the SHA256 hash of this 36 byte value and send it to the server.
-
-To extract the C2 servers, we emulate the the c2_connect() function with the relevant socket syscalls hooked.
-Importantly we hook sys_connect to log the server and port, and getsockopt to report a connection failure
-which will cause the next server to be tried. Once we see a repeat, we stop.
-
-To extract the C2 key, we first emulate the c2_connect() function and claim the connection succeeded.
-Then we hook send and recv to claim that the data was sent and then return a fake server seed.
-We can then use memory tracing to record where this server seed gets written and
-trace the 32 bytes that get written adjacent to that value. This is then the key.
-
-It currently works with x86, x86-64, MIPS and MIPSel samples.
-ARM could be supported but the samples I have looked at structures the 
-syscalls differently which trips up the way I'm finding the c2_connect() function.
-Finally, it is also possible to connect to the C2 server to validate the config but
-this is currently not implemented.
-
-Possible improvements:
-- support auto-finding C2 functions for ARM (syscalls are inlined differently)
-- validate against C2
-"""
 
 import ast
 import enum

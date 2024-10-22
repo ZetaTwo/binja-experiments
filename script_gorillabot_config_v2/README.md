@@ -34,6 +34,11 @@ syscalls differently which trips up the way I'm finding the c2_connect() functio
 Finally, it is also possible to connect to the C2 server to validate the config but
 this is currently not implemented.
 
+Possible improvements:
+
+- Support auto-finding C2 functions for ARM (syscalls are inlined differently)
+- Validate against C2
+
 ## Usage
 
 Requirements can be found in [requirements.txt]
